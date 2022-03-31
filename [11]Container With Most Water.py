@@ -35,24 +35,23 @@
 #  2 <= n <= 10⁵ 
 #  0 <= height[i] <= 10⁴ 
 #  
-#  Related Topics Array Two Pointers Greedy 👍 14958 👎 892
+#  Related Topics Array Two Pointers Greedy 👍 15167 👎 901
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def maxArea(self, height: List[int]) -> int:
-        left = 0
-        right = len(height) - 1
-        area = 0
+        left_pointer = 0
+        right_pointer = len(height) - 1
 
-        while left < right:
-            min_height = min(height[left], height[right])
-            new_area = min_height* (right - left)
-            area = max(area,  new_area)
-
-            if height[left] < height[right]:
-                left += 1
+        max_amount = 0
+        while left_pointer < right_pointer:
+            amount = min(height[left_pointer], height[right_pointer]) * (right_pointer - left_pointer)
+            max_amount = max(max_amount, amount)
+            if height[left_pointer] < height[right_pointer]:
+                left_pointer += 1
             else:
-                right -= 1
-        return area
+                right_pointer -= 1
+
+        return max_amount
 # leetcode submit region end(Prohibit modification and deletion)
