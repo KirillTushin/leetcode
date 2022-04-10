@@ -47,7 +47,7 @@
 # 
 #  
 #  Follow up: Can you solve it using O(1) (i.e. constant) memory? 
-#  Related Topics Hash Table Linked List Two Pointers 👍 7644 👎 764
+#  Related Topics Hash Table Linked List Two Pointers 👍 7759 👎 768
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -57,13 +57,6 @@
 #         self.val = x
 #         self.next = None
 
-
-def is_equal(a, b):
-    if a.val == b.val and a.next == b.next:
-        return True
-    return False
-
-
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         if not head:
@@ -71,17 +64,14 @@ class Solution:
 
         fast = head
 
-        do_slow = True
-        while fast.next:
-            fast = fast.next
-            if is_equal(head, fast):
-                return True
-
-            if do_slow:
-                head = head.next
-                do_slow = False
+        while True:
+            if fast.next and fast.next.next:
+                fast = fast.next.next
             else:
-                do_slow = True
+                return False
 
-        return False
+            head = head.next
+
+            if head == fast:
+                return True
 # leetcode submit region end(Prohibit modification and deletion)

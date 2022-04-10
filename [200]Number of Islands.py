@@ -40,26 +40,30 @@
 #  grid[i][j] is '0' or '1'. 
 #  
 #  Related Topics Array Depth-First Search Breadth-First Search Union Find 
-# Matrix 👍 13033 👎 319
+# Matrix 👍 13107 👎 319
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        count = 0
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
-                if grid[i][j] == '1':
-                    self.dfs(grid, i, j)
-                    count += 1
-        return count
+        m = len(grid)
+        n = len(grid[0])
 
-    def dfs(self, grid, i, j):
-        if i<0 or j<0 or i>=len(grid) or j>=len(grid[0]) or grid[i][j] != '1':
-            return
-        grid[i][j] = '#'
-        self.dfs(grid, i+1, j)
-        self.dfs(grid, i-1, j)
-        self.dfs(grid, i, j+1)
-        self.dfs(grid, i, j-1)
+        def deep_first_search(i: int, j: int) -> None:
+            if i < 0 or j < 0 or i > m - 1 or j > n - 1 or grid[i][j] != '1':
+                return
+            grid[i][j] = '#'
+            deep_first_search(i - 1, j)
+            deep_first_search(i + 1, j)
+            deep_first_search(i, j - 1)
+            deep_first_search(i, j + 1)
+
+        count = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    count += 1
+                    deep_first_search(i, j)
+
+        return count
 # leetcode submit region end(Prohibit modification and deletion)

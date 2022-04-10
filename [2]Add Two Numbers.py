@@ -37,7 +37,7 @@
 #  It is guaranteed that the list represents a number that does not have 
 # leading zeros. 
 #  
-#  Related Topics Linked List Math Recursion 👍 17355 👎 3616
+#  Related Topics Linked List Math Recursion 👍 17677 👎 3666
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -48,30 +48,26 @@
 #         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        result = []
         carry = 0
-        while l1 or l2:
-            r = 0
+        head = ListNode(0, ListNode(0))
+        result = head
+        len_result = 0
+        while l1 or l2 or carry:
+            l1_val = 0
+            l2_val = 0
 
-            if l1 is not None:
-                r += l1.val
+            if l1:
+                l1_val = l1.val
                 l1 = l1.next
-
-            if l2 is not None:
-                r += l2.val
+            if l2:
+                l2_val = l2.val
                 l2 = l2.next
 
-            r += carry
-            carry, r = r // 10, r%10
-            result.append(r)
+            val = l1_val + l2_val + carry
 
-        if carry != 0:
-            result.append(carry)
-
-        result_list_node = None
-        for r in result[::-1]:
-            result_list_node = ListNode(r, result_list_node)
-
-        return result_list_node
-
+            carry, val = divmod(val, 10)
+            head.next = ListNode(val=val)
+            head = head.next
+            len_result += 1
+        return result.next
 # leetcode submit region end(Prohibit modification and deletion)
